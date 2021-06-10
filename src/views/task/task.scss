@@ -1,0 +1,59 @@
+
+.Detail{
+  .title {
+    display: inline-block;
+    margin-top: 31px;
+    width: 30%;
+    text-align: left;
+    vertical-align: top;
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: #000000;
+    letter-spacing: 0;
+    line-height: 16px;
+    font-weight: 500; 
+  }
+  .ans {
+    display: inline-block;
+    margin-top: 31px;
+    width: 70%;
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: #000000;
+    letter-spacing: 0;
+    font-weight: 500;
+  }
+  
+}
+
+  .ant-cascader-menu-item{
+    max-width: 200px;
+  }
+
+//给所有弹出框加一个弧度
+  .ant-modal-content{
+    border-radius: 10px !important;
+  }
+  .ant-modal-header{
+    border-radius: 10px !important;
+  }
+
+  //统一修改选择框样式
+
+  .selectStyle .ant-select-selector{
+    width: 400px !important;
+    height: 40px !important;
+    border-radius: 5px !important;
+    
+    .ant-select-selection-item{
+      line-height: 40px !important;
+    }
+  }
+  .ant-cascader-picker{
+    width: 400px !important;
+    .ant-cascader-input{
+      width: 400px !important;
+      height: 40px !important;
+      border-radius: 5px !important;
+    }
+  }
