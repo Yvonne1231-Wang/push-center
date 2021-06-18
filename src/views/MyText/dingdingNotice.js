@@ -380,7 +380,7 @@ export default class dingdingNotice extends Component {
             //     }
             //     if(index !== -1) {addRes.splice(index, 1);}
             // }
-            this.formRef.current.setFieldsValue({ variable: addRes });
+            this.formRef.current({ variable: addRes });
         }
     }
     onURLChange(e){

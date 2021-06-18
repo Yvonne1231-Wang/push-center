@@ -17,6 +17,8 @@ import MyHistory from "../views/task/history";
 import HistoryDetail from "../views/task/historyDetail";
 
 import MyTask from "../views/task/task";
+import MyScene from "../views/task/scene";
+
 
 
 
@@ -40,6 +42,8 @@ export default class Router extends Component {
               <Route exact path="/task/history" component={MyHistory} />
               <Route exact path="/task/historyDetail" component={HistoryDetail} />
               <Route exact path="/task" component={MyTask} />
+              <Route exact path="/task/scene" component={MyScene} />
+
 
 
               

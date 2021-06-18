@@ -3,9 +3,12 @@ import apis from "../../../utils/api/unsplash/index";
 
 import { Form, Input, Row, Select, Col, Modal, Radio, message, Popover, Cascader } from "antd";
 // import { Form } from "@ant-design/compatible"
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import moment from "moment";
 import "moment/locale/zh-cn";
 moment.locale("zh-cn");
+const { confirm } = Modal;
+
 export default class EditForm extends Component {
   state = {
 
@@ -49,7 +52,9 @@ export default class EditForm extends Component {
       is_at_all: Object.hasOwnProperty.call(nextProps.currentRowData, "data") ? nextProps.currentRowData.data.is_at_all : false,
       atflowState: nextProps.currentRowData.style == "ding_robot" ? Object.hasOwnProperty.call(nextProps.currentRowData, "data") ? nextProps.currentRowData.data.is_at_all ? 11 : nextProps.currentRowData.data.user_id_list.length ? 12 : 10 : '' : '',
       recordFlowState: Object.hasOwnProperty.call(nextProps.currentRowData, "data") ? nextProps.currentRowData.data.is_alone : false,
+      styleBefore: nextProps.currentRowData.style,
     });
+
     // }
   }
 
@@ -192,7 +197,63 @@ export default class EditForm extends Component {
     }).catch(err => {
       message.error(err);
     });
+  };
+
+  diff = (val) => {
+    let that = this
+    const {styleBefore } = this.state;
+    console.log(styleBefore,val)
+    if (((styleBefore == "ding_group" || styleBefore == "ding_robot" || styleBefore == "ding_notice" || styleBefore == "ding_record") && (val == 'mail' || val == 'sms'))
+    ||((val === "ding_group" || val === "ding_robot" || val === "ding_notice" || val == "ding_record") &&(styleBefore === 'mail' || styleBefore === 'sms'))
+    ||((val === 'mail' || val === 'sms')&&(styleBefore === 'mail' || styleBefore === 'sms'))
+    ||((styleBefore === 'mail' || styleBefore === 'sms')&&(val === 'mail' || val === 'sms'))) {
+      confirm({
+        title: `更改类型`,
+        icon: <ExclamationCircleOutlined />,
+        content: (
+          <div>
+            <p>您确定要强制把{this.styleEtoC(styleBefore)}转换为{this.styleEtoC(val)}么？</p>
+            <p>如果此任务现有通过接口api形式被调用，请通知调用方：“任务渠道”已改变，请注意任务“接收方”配置。</p>
+          </div>
+        ),
+        okText: '确定',
+        cancelText: '取消',
+        onOk() {
+          that.setState({ styleBefore: val })
+          that.editFormRef.current.setFieldsValue({ www: [] })
+        },
+        onCancel() {
+          that.editFormRef.current.setFieldsValue({ style: styleBefore })
+        },
+      });
+    }
+
+    else {
+          that.setState({ styleBefore: val })
+          that.editFormRef.current.setFieldsValue({ www: [] })
+    }
+  };
+
+  styleEtoC = (val) => {
+    if (val == "ding_group") {
+      return "钉钉群通知"
+    } else if (val == "ding_robot") {
+      return "钉钉机器人"
+    } else if (val == "ding_notice") {
+      return "钉钉工作通告"
+    } else if (val == "ding_record") {
+      return "钉钉待办"
+    } else if (val == "mail") {
+      return "邮件"
+    } else if (val == "sms") {
+      return "短信"
+    } else if (val == "tel") {
+      return "电话"
+    } else {
+      return "未知类型"
+    }
   }
+
 
 
   cronExample = (
@@ -217,7 +278,8 @@ export default class EditForm extends Component {
     const { Option } = Select;
 
     // const { getFieldDecorator } = form;
-    const { data, style, is_alone, is_periodic_tasks, is_run_now, tpl_id } = currentRowData;
+    // const {style} = this.state;
+    const { data, is_periodic_tasks, is_run_now, tpl_id } = currentRowData;
     const send_style = is_run_now ? 2 : is_periodic_tasks ? 3 : 1
     const formItemLayout = {
       labelCol: {
@@ -382,7 +444,8 @@ export default class EditForm extends Component {
             <Select
               style={{ width: 400, height: 40, borderRadius: 5 }}
               className="selectStyle"
-              disabled
+              onChange={(val) => { this.diff(val) }}
+            // disabled
             >
               <Option value="mail" >邮件</Option>
               <Option value="sms" >短信</Option>
@@ -394,16 +457,16 @@ export default class EditForm extends Component {
           </Form.Item>
 
           {
-            style == "mail" && <>
+            this.state.styleBefore == "mail" && <>
               <Form.Item
                 label="发件人"
                 rules={[{ required: true }]}
-                name="name"
+                name="username"
               >
                 <Select
                   placeholder="请选择发件人"
                   style={{ width: 400, height: 40, borderRadius: 5 }}
-                  onChange={(e) => this.state.theUserName = e.target.value}
+                  // onChange={(e) => this.state.theUserName = e.target.value}
                   className="selectStyle"
                   onFocus={this.onFocusUser}
                 >
@@ -506,7 +569,7 @@ export default class EditForm extends Component {
             </>
           }
           {
-            style == "sms" && <>
+            this.state.styleBefore == "sms" && <>
               <Form.Item
                 label="接收方"
                 name="to"
@@ -601,7 +664,7 @@ export default class EditForm extends Component {
             </>
           }
           {
-            style == "ding_notice" && <>
+            this.state.styleBefore == "ding_notice" && <>
               <Form.Item
                 label="接收对象"
                 name="is_at_all"
@@ -720,7 +783,7 @@ export default class EditForm extends Component {
 
           }
           {
-            style == "ding_group" && <>
+            this.state.styleBefore == "ding_group" && <>
               <Form.Item
                 label="发送方"
                 name="chat_id"
@@ -821,7 +884,7 @@ export default class EditForm extends Component {
           }
 
           {
-            style == "ding_robot" && <>
+            this.state.styleBefore == "ding_robot" && <>
               <Form.Item
                 label="发送方"
                 name="webhook"
@@ -965,7 +1028,7 @@ export default class EditForm extends Component {
           }
 
           {
-            style == "ding_record" && <>
+            this.state.styleBefore == "ding_record" && <>
               <Form.Item
                 label="待办方式"
                 name="is_alone"
@@ -1157,8 +1220,8 @@ export default class EditForm extends Component {
         console.log(values);
         const datas = {
           ...values,
-          username: this.state.theUserName ? this.state.theUserName : data.username ? data.username : "",
-          atflowState: this.state.atflowState
+          // username: this.state.theUserName ? this.state.theUserName : data.username ? data.username : "",
+          atflowState: this.state.atflowState,
         }
         onOk(id, datas)
       }
@@ -1168,6 +1231,7 @@ export default class EditForm extends Component {
       })
   }
 }
+
 
 
 

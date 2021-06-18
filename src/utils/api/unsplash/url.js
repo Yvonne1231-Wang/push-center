@@ -50,5 +50,15 @@ export default {
   sendTask:baseUrl + '/task/id',
   transferTask:baseUrl + '/task',
 
+  getScene: baseUrl + '/scene',
+  createScene: baseUrl + '/scene',
+  deleteScene: baseUrl + '/scene/id',
+  detailScene: baseUrl + '/scene/id',
+  editScene:baseUrl + '/scene/id',
+  transferScene:baseUrl + '/scene',
+
+
+
+
   Upload: baseUrl +'/upload'
 };

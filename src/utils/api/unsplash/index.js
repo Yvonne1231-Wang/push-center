@@ -142,6 +142,25 @@ export default {
   },
 
 
+  //场景推送
+  getScene: (params) => {
+    return api.get(urls.getScene, params, header)
+  },
+  createScene: (params) => {
+    return api.post(urls.createScene, params, header)
+  },
+  deleteScene: (id,params) => {
+    return api.delete(urls.deleteScene + "/" + id, params, header)
+  },
+  detailScene: (id) => {
+    return api.get(urls.detailScene + "/" + id, {}, header)
+  },
+  editScene: (id, params) => {
+    return api.put(urls.editScene + "/" + id, params, header)
+  },
+  transferScene: (id, params) => {
+    return api.post(urls.transferScene + "/" + id + "/transfer", params, header)
+  },
 
 
 

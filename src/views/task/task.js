@@ -2043,7 +2043,7 @@ export default class MyTask extends Component {
     };
 
     handleEditOk = (id, data) => {
-        // console.log("okk", data)
+        console.log("okk", data.username)
         this.setState({
             editVisible: false,
         });
@@ -2158,6 +2158,7 @@ export default class MyTask extends Component {
         }
         console.log(values)
         apis.editTask(id, values).then((response) => {
+            console.log('response:',response)
             // this.editFormRef.current.resetFields();
             this.setState({ editVisible: false });
             message.success("编辑成功!")

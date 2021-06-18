@@ -28,12 +28,12 @@ export default {
     }
     return instance.put(url, params, options);
   },
-  delete(url, params, headers) {
+  delete(url, data, headers) {
     let options = {};
-    if (params) {
-      options.params = params;
+    if (data) {
+      options.data = data;
     }
-    console.log(options.params);
+    console.log(options.data);
     if (headers) {
       options.headers = headers;
     }

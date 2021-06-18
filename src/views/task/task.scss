@@ -49,6 +49,14 @@
       line-height: 40px !important;
     }
   }
+
+  .selectStyleMulti .ant-select-selector{
+    width: 400px !important;
+    min-height: 40px !important;
+    border-radius: 5px !important;
+    
+  }
+
   .ant-cascader-picker{
     width: 400px !important;
     .ant-cascader-input{
@@ -56,4 +64,8 @@
       height: 40px !important;
       border-radius: 5px !important;
     }
+  }
+
+  .tplDetail .ant-tooltip-inner{
+    min-width: 300px !important;
   }

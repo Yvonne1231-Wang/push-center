@@ -55,9 +55,13 @@ const Layouts = (props) => {
                                 <Menu.Item key="task-task" flag="task-task">
                                     <NavLink to="/task">推送任务</NavLink>
                                 </Menu.Item>
+                                <Menu.Item key="task-scene" flag="task-scene">
+                                    <NavLink to="/task/scene">场景推送</NavLink>
+                                </Menu.Item>
                                 <Menu.Item key="task-history" flag="task-history">
                                     <NavLink to="/task/history">历史推送</NavLink>
                                 </Menu.Item>
+                                
                             </SubMenu>
 
                             {/**消息模版*/}
